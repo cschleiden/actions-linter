@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import {issueCommand} from "@actions/core/lib/command";
 import {context, getOctokit} from "@actions/github";
-import glob from "@actions/glob";
+import {create} from "@actions/glob";
 import {Octokit} from "@octokit/rest";
 import {promises as fsPromises} from "fs";
 import {parse} from "github-actions-parser";
@@ -19,7 +19,7 @@ async function run(): Promise<void> {
     };
 
     const patterns = (JSON.parse(core.getInput("workflows")) as string[]) || [];
-    const globber = await glob.create(patterns.join("\n"));
+    const globber = await create(patterns.join("\n"));
     const files = await globber.glob();
 
     for (const file of files) {

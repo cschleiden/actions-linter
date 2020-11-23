@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const command_1 = __webpack_require__(7351);
 const github_1 = __webpack_require__(5438);
-const glob_1 = __importDefault(__webpack_require__(8090));
+const glob_1 = __webpack_require__(8090);
 const fs_1 = __webpack_require__(5747);
 const github_actions_parser_1 = __webpack_require__(89);
 const line_column_1 = __importDefault(__webpack_require__(5171));
@@ -57,7 +57,7 @@ function run() {
                 client: github_1.getOctokit(token),
             };
             const patterns = JSON.parse(core.getInput("workflows")) || [];
-            const globber = yield glob_1.default.create(patterns.join("\n"));
+            const globber = yield glob_1.create(patterns.join("\n"));
             const files = yield globber.glob();
             for (const file of files) {
                 try {
