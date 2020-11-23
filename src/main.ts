@@ -16,6 +16,7 @@ async function run(): Promise<void> {
       owner: context.repo.owner,
       repository: context.repo.repo,
       client: getOctokit(token) as Octokit,
+      orgFeaturesEnabled: false,
     };
 
     const patterns = (JSON.parse(core.getInput("workflows")) as string[]) || [];

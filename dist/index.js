@@ -55,6 +55,7 @@ function run() {
                 owner: github_1.context.repo.owner,
                 repository: github_1.context.repo.repo,
                 client: github_1.getOctokit(token),
+                orgFeaturesEnabled: false,
             };
             const patterns = JSON.parse(core.getInput("workflows")) || [];
             const globber = yield glob_1.create(patterns.join("\n"));
