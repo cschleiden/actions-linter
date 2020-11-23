@@ -43,10 +43,11 @@ const core = __importStar(__webpack_require__(2186));
 const command_1 = __webpack_require__(7351);
 const github_1 = __webpack_require__(5438);
 const glob_1 = __importDefault(__webpack_require__(8090));
-const promises_1 = __webpack_require__(9225);
+const fs_1 = __webpack_require__(5747);
 const github_actions_parser_1 = __webpack_require__(89);
 const types_1 = __webpack_require__(1811);
 const line_column_1 = __importDefault(__webpack_require__(5171));
+const { readFile } = fs_1.promises;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -61,7 +62,7 @@ function run() {
             const files = yield globber.glob();
             for (const file of files) {
                 try {
-                    const workflowContent = yield promises_1.readFile(file, "utf-8");
+                    const workflowContent = yield readFile(file, "utf-8");
                     const workflow = yield github_actions_parser_1.parse(parserContext, file, workflowContent);
                     const lineColumnFinder = line_column_1.default(workflowContent);
                     for (const diagnostic of workflow.diagnostics) {
@@ -25409,14 +25410,6 @@ module.exports = require("events");;
 
 "use strict";
 module.exports = require("fs");;
-
-/***/ }),
-
-/***/ 9225:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");;
 
 /***/ }),
 
