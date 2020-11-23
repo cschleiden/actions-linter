@@ -1,0 +1,1 @@
+Basic GitHub Actions workflow linter
