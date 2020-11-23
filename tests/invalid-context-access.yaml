@@ -4,4 +4,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: echo Hello World ${{ secrets.DOES_NOT_EXIST }}
+    - run: echo "Pushed by: ${{ github.event.pusher }}"
