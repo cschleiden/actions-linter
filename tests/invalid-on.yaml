@@ -3,5 +3,6 @@ on: this-does-not-exist
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - run: echo Hello World
+      - run: echo Hello World
