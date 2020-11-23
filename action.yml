@@ -1,11 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: GitHub Actions Workflow Linter
+description: Parse and validate GitHub Actions workflows
+author: cschleiden
 inputs:
-  milliseconds: # change this
+  workflows:
+    description: The workflows to validate. Accepts JSON encoded glob patterns (e.g., "[.github/workflow/*.yaml]")
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  github-token:
+    description: The GitHub token used to create an authenticated client
+    default: ${{ github.token }}
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

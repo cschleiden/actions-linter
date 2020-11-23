@@ -1,19 +1,56 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import * as core from "@actions/core";
+import {issueCommand} from "@actions/core/lib/command";
+import {context, getOctokit} from "@actions/github";
+import glob from "@actions/glob";
+import {Octokit} from "@octokit/rest";
+import {readFile} from "fs/promises";
+import {parse} from "github-actions-parser";
+import {Context, DiagnosticKind} from "github-actions-parser/dist/types";
+import lineColumn from "line-column";
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const token = core.getInput("github-token", {required: true});
+    const parserContext: Context = {
+      owner: context.repo.owner,
+      repository: context.repo.repo,
+      client: getOctokit(token) as Octokit,
+    };
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const patterns = (JSON.parse(core.getInput("workflows")) as string[]) || [];
+    const globber = await glob.create(patterns.join("\n"));
+    const files = await globber.glob();
 
-    core.setOutput('time', new Date().toTimeString())
+    for (const file of files) {
+      try {
+        const workflowContent = await readFile(file, "utf-8");
+        const workflow = await parse(parserContext, file, workflowContent);
+
+        const lineColumnFinder = lineColumn(workflowContent);
+
+        for (const diagnostic of workflow.diagnostics) {
+          const {line, col} = lineColumnFinder.fromIndex(diagnostic.pos[0]) || {
+            line: -1,
+            col: -1,
+          };
+
+          issueCommand(
+            diagnostic.kind === DiagnosticKind.Error ? "error" : "warning",
+            {
+              file: file,
+              line,
+              col,
+            },
+            diagnostic.message,
+          );
+        }
+      } catch (e) {
+        core.error(`Could not parse ${file}: ${e.message}`);
+      }
+    }
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message);
   }
 }
 
-run()
+run();
