@@ -5,7 +5,7 @@ import glob from "@actions/glob";
 import {Octokit} from "@octokit/rest";
 import {promises as fsPromises} from "fs";
 import {parse} from "github-actions-parser";
-import {Context, DiagnosticKind} from "github-actions-parser/dist/types";
+import {Context} from "github-actions-parser/dist/types";
 import lineColumn from "line-column";
 const {readFile} = fsPromises;
 
@@ -36,7 +36,9 @@ async function run(): Promise<void> {
           };
 
           issueCommand(
-            diagnostic.kind === DiagnosticKind.Error ? "error" : "warning",
+            diagnostic.kind === 0 /*DiagnosticKind.Error*/
+              ? "error"
+              : "warning",
             {
               file: file,
               line,

@@ -45,7 +45,6 @@ const github_1 = __webpack_require__(5438);
 const glob_1 = __importDefault(__webpack_require__(8090));
 const fs_1 = __webpack_require__(5747);
 const github_actions_parser_1 = __webpack_require__(89);
-const types_1 = __webpack_require__(1811);
 const line_column_1 = __importDefault(__webpack_require__(5171));
 const { readFile } = fs_1.promises;
 function run() {
@@ -70,7 +69,9 @@ function run() {
                             line: -1,
                             col: -1,
                         };
-                        command_1.issueCommand(diagnostic.kind === types_1.DiagnosticKind.Error ? "error" : "warning", {
+                        command_1.issueCommand(diagnostic.kind === 0 /*DiagnosticKind.Error*/
+                            ? "error"
+                            : "warning", {
                             file: file,
                             line,
                             col,
@@ -25369,14 +25370,6 @@ exports.newMap = newMap;
 /***/ ((module) => {
 
 module.exports = eval("require")("encoding");
-
-
-/***/ }),
-
-/***/ 1811:
-/***/ ((module) => {
-
-module.exports = eval("require")("github-actions-parser/dist/types");
 
 
 /***/ }),
