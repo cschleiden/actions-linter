@@ -3,10 +3,10 @@ description: Parse and validate GitHub Actions workflows
 author: cschleiden
 inputs:
   workflows:
-    description: The workflows to validate. Accepts JSON encoded glob patterns (e.g., [".github/workflow/*.yaml"])
+    description: Workflows to validate. Accepts JSON-array encoded glob patterns (e.g., [".github/workflow/*.yaml"])
     required: true
   github-token:
-    description: The GitHub token used to create an authenticated client
+    description: GitHub token used to create an authenticated client
     default: ${{ github.token }}
     required: false
 runs:
