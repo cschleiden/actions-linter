@@ -1,12 +1,13 @@
 import * as core from "@actions/core";
-import {issueCommand} from "@actions/core/lib/command";
-import {context, getOctokit} from "@actions/github";
-import {create} from "@actions/glob";
-import {Octokit} from "@octokit/rest";
-import {promises as fsPromises} from "fs";
-import {parse} from "github-actions-parser";
+
 import {Context} from "github-actions-parser/dist/types";
+import {context} from "@actions/github";
+import {create} from "@actions/glob";
+import {promises as fsPromises} from "fs";
+import {issueCommand} from "@actions/core/lib/command";
 import lineColumn from "line-column";
+import {parse} from "github-actions-parser";
+
 const {readFile} = fsPromises;
 
 async function run(): Promise<void> {
@@ -15,7 +16,7 @@ async function run(): Promise<void> {
     const parserContext: Context = {
       owner: context.repo.owner,
       repository: context.repo.repo,
-      client: getOctokit(token) as Octokit,
+      client: undefined as any, // Disable dynamic features //  getOctokit(token) as Octokit,
       orgFeaturesEnabled: false,
     };
 
