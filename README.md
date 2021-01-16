@@ -28,4 +28,4 @@ jobs:
 
 # Future
 
-The extension expects the `GITHUB_TOKEN` to be passed in as an input but doesn't use it yet. The underlying [parser](https://www.github.com/cschleiden/github-actions-parser) does support using GitHub's API to dynamically fetch valid runner labels, action parameters etc. in general, but needs more granular control over the API calls made since the `GITHUB_TOKEN` doesn't have all of the required permissions. This fucntionality will be available in a future version 🤞.
+The underlying [parser](https://www.github.com/cschleiden/github-actions-parser) does support using GitHub's API to dynamically fetch valid runner labels, action parameters etc. in general, but needs more granular control over the API calls made since the `GITHUB_TOKEN` doesn't have all of the required permissions. This functionality might be available in a future version, it's currently disabled 🤞.

@@ -5,10 +5,6 @@ inputs:
   workflows:
     description: Workflows to validate. Accepts JSON-array encoded glob patterns (e.g., [".github/workflow/*.yaml"])
     required: true
-  github-token:
-    description: GitHub token used to create an authenticated client
-    default: ${{ github.token }}
-    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
