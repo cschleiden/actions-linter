@@ -1,18 +1,20 @@
 import * as core from "@actions/core";
-
-import {Context} from "github-actions-parser/dist/types";
+import {issueCommand} from "@actions/core/lib/command";
 import {context} from "@actions/github";
 import {create} from "@actions/glob";
 import {promises as fsPromises} from "fs";
-import {issueCommand} from "@actions/core/lib/command";
-import lineColumn from "line-column";
 import {parse} from "github-actions-parser";
+import {Context} from "github-actions-parser/dist/types";
+import lineColumn from "line-column";
 
 const {readFile} = fsPromises;
 
 async function run(): Promise<void> {
+  let errorsFound = false;
+
   try {
-    const token = core.getInput("github-token", {required: true});
+    // Enable dynamic features for now.
+    // const token = core.getInput("github-token", {required: true});
     const parserContext: Context = {
       owner: context.repo.owner,
       repository: context.repo.repo,
@@ -48,6 +50,10 @@ async function run(): Promise<void> {
             },
             diagnostic.message,
           );
+
+          if (diagnostic.kind === 0) {
+            errorsFound = true;
+          }
         }
       } catch (e) {
         core.error(`Could not parse ${file}: ${e.message}`);
@@ -55,6 +61,10 @@ async function run(): Promise<void> {
     }
   } catch (error) {
     core.setFailed(error.message);
+  }
+
+  if (errorsFound) {
+    core.setFailed("Linting errors have been found");
   }
 }
 

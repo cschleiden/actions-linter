@@ -40,17 +40,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
+const command_1 = __webpack_require__(7351);
 const github_1 = __webpack_require__(5438);
 const glob_1 = __webpack_require__(8090);
 const fs_1 = __webpack_require__(5747);
-const command_1 = __webpack_require__(7351);
-const line_column_1 = __importDefault(__webpack_require__(5171));
 const github_actions_parser_1 = __webpack_require__(89);
+const line_column_1 = __importDefault(__webpack_require__(5171));
 const { readFile } = fs_1.promises;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        let errorsFound = false;
         try {
-            const token = core.getInput("github-token", { required: true });
+            // Enable dynamic features for now.
+            // const token = core.getInput("github-token", {required: true});
             const parserContext = {
                 owner: github_1.context.repo.owner,
                 repository: github_1.context.repo.repo,
@@ -77,6 +79,9 @@ function run() {
                             line,
                             col,
                         }, diagnostic.message);
+                        if (diagnostic.kind === 0) {
+                            errorsFound = true;
+                        }
                     }
                 }
                 catch (e) {
@@ -86,6 +91,9 @@ function run() {
         }
         catch (error) {
             core.setFailed(error.message);
+        }
+        if (errorsFound) {
+            core.setFailed("Linting errors have been found");
         }
     });
 }
