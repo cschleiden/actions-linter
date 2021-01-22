@@ -1,8 +1,7 @@
 {
-  "name": "typescript-action",
+  "name": "actions-linter",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -11,16 +10,12 @@
     "package": "ncc build --source-map --license licenses.txt",
     "all": "npm run build && npm run format && npm run package"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
-  },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "cschleiden",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6",
@@ -28,7 +23,7 @@
     "@actions/glob": "^0.1.1",
     "@octokit/rest": "^18.0.9",
     "@types/line-column": "^1.0.0",
-    "github-actions-parser": "0.15.0",
+    "github-actions-parser": "0.16.0",
     "line-column": "^1.0.2"
   },
   "devDependencies": {
