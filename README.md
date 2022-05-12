@@ -1,6 +1,12 @@
+# Recommendation
+
+At this point I would recommend just using [actionlint](https://github.com/rhysd/actionlint). Use it as a binary, or via the `gh` CLI - https://github.com/cschleiden/gh-actionlint. It supports more features and better linting! 
+
+---
+
 Basic GitHub Actions workflow linter
 
-# Usage
+## Usage
 
 To lint all workflow files
 
